@@ -1,0 +1,91 @@
+﻿@model IEnumerable<AccountsIndexViewModel>
+
+@{
+    ViewData["Title"] = "Accounts";
+
+    string FormatBalance(decimal balanace)
+    {
+        return Math.Abs(balanace).ToString("N");
+    }
+
+    string GetBalanceClass(decimal balance)
+    {
+        return balance >= 0 ? "active" : "passive";
+    }
+}
+
+
+<h1>Accounts</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Create new</a>
+
+<div class="total-containers mb-3">
+    <div>
+        <div>
+            <strong>Active</strong>
+        </div>
+        <div class="active">
+            @FormatBalance(Model.Where(x => x.Balance > 0).Sum(x => x.Balance))
+        </div>
+    </div>
+    <div>
+        <div>
+            <strong>Passive</strong>
+        </div>
+        <div class="passive">
+           - @FormatBalance(Model.Where(x => x.Balance < 0).Sum(x => x.Balance))
+        </div>
+    </div>
+    <div>
+        <div>
+            <strong>Total</strong>
+        </div>
+        <div>
+            @FormatBalance(Model.Sum(x => x.Balance))
+        </div>
+    </div>
+</div>
+
+<div class="accordion accounts-accordion">
+    @foreach(var accountType in Model)
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headerOne">
+                @{
+                    var id = accountType.AccountType.Replace(" ", "");
+                    var dataBSTarget = "#" + id;
+                    var accountTypeClass = GetBalanceClass(accountType.Balance);
+                }
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="@dataBSTarget">
+                    <span class="me-3">
+                        <span><strong>@accountType.AccountType</strong></span>
+                        <span class="@accountTypeClass">@FormatBalance(accountType.Balance)</span>
+                    </span>
+                </button>
+            </h2>
+            <div id="@id" class="accordion-collapse collapse show">
+                <div>
+                    <ul class="list-group">
+                        @foreach (var account in accountType.Accounts)
+                        {
+                            var accountClass = GetBalanceClass(account.Balance);
+                            <li class="list-group-item">
+                                <span>
+                                    <strong>@account.Name</strong>
+                                <a class="btn-primary btn">
+                                    <i class="bi-pencil-fill"></i>
+                                </a>
+                                <a class="btn-danger btn">
+                                    <i class="bi-trash-fill"></i>
+                                </a>
+                                </span>
+                                <span class="@accountClass">@FormatBalance(account.Balance)</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>

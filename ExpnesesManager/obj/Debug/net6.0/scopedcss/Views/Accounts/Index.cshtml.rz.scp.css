@@ -1,0 +1,19 @@
+.accounts-accordion button[b-0g7kkq4mky] {
+    color: black !important;
+    font-size: 20px;
+}
+
+    .accounts-accordion button > span[b-0g7kkq4mky] {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+.accounts-accordion ul li[b-0g7kkq4mky] {
+    display: flex;
+    justify-content: space-between;
+}
+
+.accounts-accordion .accordion-collapse[b-0g7kkq4mky] {
+    font-size: 18px;
+}

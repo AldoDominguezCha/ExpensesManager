@@ -57,3 +57,4 @@ C:\Users\6112638\source\repos\ExpnesesManager\ExpnesesManager\bin\Debug\net6.0\r
 C:\Users\6112638\source\repos\ExpnesesManager\ExpnesesManager\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\6112638\source\repos\ExpnesesManager\ExpnesesManager\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\6112638\source\repos\ExpnesesManager\ExpnesesManager\obj\Debug\net6.0\ExpnesesManager.csproj.CopyComplete
+C:\Users\6112638\source\repos\ExpnesesManager\ExpnesesManager\obj\Debug\net6.0\scopedcss\Views\Accounts\Index.cshtml.rz.scp.css

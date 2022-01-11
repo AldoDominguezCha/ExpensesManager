@@ -1,3 +1,23 @@
+/* _content/ExpnesesManager/Views/Accounts/Index.cshtml.rz.scp.css */
+.accounts-accordion button[b-0g7kkq4mky] {
+    color: black !important;
+    font-size: 20px;
+}
+
+    .accounts-accordion button > span[b-0g7kkq4mky] {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+.accounts-accordion ul li[b-0g7kkq4mky] {
+    display: flex;
+    justify-content: space-between;
+}
+
+.accounts-accordion .accordion-collapse[b-0g7kkq4mky] {
+    font-size: 18px;
+}
 /* _content/ExpnesesManager/Views/Shared/_Layout.cshtml.rz.scp.css */
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
