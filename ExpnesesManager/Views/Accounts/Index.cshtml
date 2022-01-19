@@ -73,10 +73,10 @@
                             <li class="list-group-item">
                                 <span>
                                     <strong>@account.Name</strong>
-                                <a class="btn-primary btn">
+                                <a class="btn-primary btn" asp-action="Edit" asp-route-id="@account.Id">
                                     <i class="bi-pencil-fill"></i>
                                 </a>
-                                <a class="btn-danger btn">
+                                <a class="btn-danger btn" asp-action="Delete" asp-route-id="@account.Id">
                                     <i class="bi-trash-fill"></i>
                                 </a>
                                 </span>

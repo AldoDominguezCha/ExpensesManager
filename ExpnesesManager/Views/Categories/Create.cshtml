@@ -1,0 +1,32 @@
+﻿@model Category
+
+@{
+    ViewData["title"] = "Create category";
+}
+
+<h1>Create category</h1>
+<h5>Categories allow us to keep track of where our money comes from and where it goes.</h5>
+
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input class="form-control" asp-for="Name"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OperationTypeId" class="form-label"></label>
+        <select asp-for="OperationTypeId" asp-items="Html.GetEnumSelectList<OperationType>()" class="form-select"></select>
+        <span asp-validation-for="OperationTypeId" class="text-danger"></span>
+    </div>
+
+    <button class="btn-primary btn" type="submit">Create</button>
+    <a asp-action="Index" class="btn-secondary btn">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

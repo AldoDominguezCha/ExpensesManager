@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GFWo0l9/e/D9gOM3diYC+TXFCH/9Pgwdijj5n0AosR4=",
+  "Hash": "/Jl4par4VCSaiCHOvpCVXAXia6dq8Y0ViF5czz5gj3w=",
   "Source": "ExpnesesManager",
   "BasePath": "_content/ExpnesesManager",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\6112638\\source\\repos\\ExpnesesManager\\ExpnesesManager\\wwwroot\\js\\TransactionsForm.js",
+      "SourceId": "ExpnesesManager",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\6112638\\source\\repos\\ExpnesesManager\\ExpnesesManager\\wwwroot\\",
+      "BasePath": "_content/ExpnesesManager",
+      "RelativePath": "js/TransactionsForm.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\TransactionsForm.js"
     },
     {
       "Identity": "C:\\Users\\6112638\\source\\repos\\ExpnesesManager\\ExpnesesManager\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

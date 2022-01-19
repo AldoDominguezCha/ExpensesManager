@@ -14,6 +14,7 @@ namespace ExpnesesManager.Models
         public int AccountTypeId { get; set; }
         public decimal Balance { get; set; }
         [StringLength(maximumLength: 1000)]
+        [Display(Name = "Account description")]
         public string AccountDescription { get; set; }
         public string AccountType { get; set; }
     }
