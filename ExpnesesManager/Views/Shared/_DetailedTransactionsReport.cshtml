@@ -1,0 +1,49 @@
+﻿@model DetailedTransactionsReport
+
+@{
+    var amountsSummaryModel = new AmountsSummaryViewModel()
+    {
+        Income = Model.IncomeBalance,
+        Expenses = Model.ExpensesBalance,
+        Total = Model.Total
+    };
+}
+
+<partial name="_NavigateByMonth" model="@Model.StartDate"/>
+
+<partial name="_AmountsSummary" model="@amountsSummaryModel"/>
+
+@if (Model.GroupedTransactions.Count() == 0)
+{
+    <h5>No data to show in this selected month</h5>
+} else
+{
+    <table class="table">
+        <tbody>
+            @foreach(var groupedTransaction in Model.GroupedTransactions)
+            {
+                <tr style="background-color : lightblue; font-size : 26px">
+                    <td colspan="3">@groupedTransaction.TransactionDate.Day 
+                        <span class="badge bg-secondary">@groupedTransaction.TransactionDate.ToString("ddd")</span>
+                    </td>
+                    <td class="active">@groupedTransaction.IncomeBalance.ToString("N")</td>
+                    <td class="passive">@groupedTransaction.ExpensesBalance.ToString("N")</td>
+                </tr>
+                @foreach (var transaction in groupedTransaction.Transactions)
+                {
+                    <tr style="vertical-align : middle">
+                        <td>
+                            <a asp-controller="transactions" asp-action="update" asp-route-id="@transaction.Id" asp-route-returnUrl="@ViewBag.ReturnUrl">
+                                <i class="bi-pencil"></i>
+                            </a>
+                        </td>
+                        <td>@transaction.Category</td>
+                        <td>@transaction.Account</td>
+                        <td class="active">@(transaction.OperationTypeId == OperationType.Income ? transaction.Amount.ToString("N") : null)</td>
+                        <td class="passive">@(transaction.OperationTypeId == OperationType.Expense ? transaction.Amount.ToString("N") : null)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

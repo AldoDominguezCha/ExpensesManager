@@ -5,6 +5,7 @@
 
         public decimal PreviousAmount { get; set; }
         public int PreviousAccountId { get; set; }
+        public string ReturnUrl { get; set; }
 
     }
 }

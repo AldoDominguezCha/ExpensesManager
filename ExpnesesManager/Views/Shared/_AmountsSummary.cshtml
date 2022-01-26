@@ -1,0 +1,28 @@
+﻿@model AmountsSummaryViewModel
+
+<div class="total-containers mb-3">
+    <div>
+        <div>
+            <strong>Deposits</strong>
+        </div>
+        <div class="active">
+            @Model.Income.ToString("N")
+        </div>
+    </div>
+    <div>
+        <div>
+            <strong>Expenses</strong>
+        </div>
+        <div class="passive">
+            @Model.Expenses.ToString("N")
+        </div>
+    </div>
+    <div>
+        <div>
+            <strong>Total balance</strong>
+        </div>
+        <div>
+            @Model.Total.ToString("N")
+        </div>
+    </div>
+</div>

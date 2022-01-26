@@ -72,7 +72,7 @@
                             var accountClass = GetBalanceClass(account.Balance);
                             <li class="list-group-item">
                                 <span>
-                                    <strong>@account.Name</strong>
+                                    <strong><a asp-action="Detail" asp-route-id="@account.Id">@account.Name</a></strong>
                                 <a class="btn-primary btn" asp-action="Edit" asp-route-id="@account.Id">
                                     <i class="bi-pencil-fill"></i>
                                 </a>

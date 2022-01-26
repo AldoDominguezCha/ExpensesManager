@@ -1,0 +1,10 @@
+﻿@model DetailedTransactionsReport
+
+@{
+    ViewData["Title"] = "Account operations";
+}
+
+<h1>Operations for account: '@ViewBag.Account'</h1>
+
+<partial name="_DetailedTransactionsReport" model="Model" />
+

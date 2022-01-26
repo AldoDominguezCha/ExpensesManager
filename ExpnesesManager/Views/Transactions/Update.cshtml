@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Update transaction";
+    var cancelLink = Model.ReturnUrl ?? Url.Action("Index");
 }
 
 <h1>Update transaction</h1>
@@ -10,6 +11,7 @@
 <form asp-action="Update" style="margin-top : 20px">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="ReturnUrl" />
     <input type="hidden" asp-for="PreviousAmount" />
     <input type="hidden" asp-for="PreviousAccountId" />
 
@@ -51,8 +53,8 @@
     </div>
 
     <button class="btn-primary btn" type="submit">Update</button>
-    <button class="btn-danger btn" asp-action="Delete" asp-route-id="@Model.Id">Delete</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <button class="btn-danger btn" asp-action="Delete" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl">Delete</button>
+    <a href="@cancelLink" class="btn btn-secondary">Cancel</a>
 
 </form>
 
