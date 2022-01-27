@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using ClosedXML.Excel;
 using ExpnesesManager.Models;
 using ExpnesesManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace ExpnesesManager.Controllers
 {
@@ -149,9 +151,140 @@ namespace ExpnesesManager.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<FileResult> ExportMonthlyExcel(int month, int year)
+        {
+            var startDate = new DateTime(year, month, 1);
+            var endDate = startDate.AddMonths(1).AddDays(-1);
+
+            int userId = _usersService.GetUserId();
+
+            var transactions = await _transactionsRepository.ObtainTransactionsByUserId(
+                new GetTransactionsByUserParameter()
+                {
+                    UserId = userId,
+                    StartDate = startDate,
+                    EndDate = endDate
+                });
+
+            var fileName = $"Expenses Manager - {startDate.ToString("MMM yyyy")}.xlsx";
+
+            return GenerateExcel(fileName, transactions);
+        }
+        [HttpGet] public async Task<FileResult> ExportAnnualExcel(int year)
+        {
+            var startDate = new DateTime(year, 1, 1);
+            var endDate = startDate.AddYears(1).AddDays(-1);
+
+            int userId = _usersService.GetUserId();
+
+            var transactions = await _transactionsRepository.ObtainTransactionsByUserId(
+                new GetTransactionsByUserParameter()
+                {
+                    UserId = userId,
+                    StartDate = startDate,
+                    EndDate = endDate
+                });
+            
+            var fileName = $"Expenses Manager - {startDate.ToString("yyyy")}.xlsx";
+
+            return GenerateExcel(fileName, transactions);
+
+        }
+
+        [HttpGet]
+        public async Task<FileResult> ExportAllExcel()
+        {
+
+            int userId = _usersService.GetUserId();
+
+            var transactions = await _transactionsRepository.ObtainTransactionsAllTimeByUserId(userId);
+
+            var fileName = $"Expenses Manager - All Time.xlsx";
+
+            return GenerateExcel(fileName, transactions);
+
+        }
+
+        private FileResult GenerateExcel(string fileName, IEnumerable<Transaction> transactions)
+        {
+            DataTable dataTable = new DataTable("Transactions");
+            dataTable.Columns.AddRange(new DataColumn[] 
+            {
+                new DataColumn("Date"),
+                new DataColumn("Account"),
+                new DataColumn("Category"),
+                new DataColumn("Description"),
+                new DataColumn("Amount"),
+                new DataColumn("Income/Expense")
+            });
+
+            foreach(var transaction in transactions)
+            {
+                dataTable.Rows.Add(transaction.OperationDate, 
+                    transaction.Account, 
+                    transaction.Category, 
+                    transaction.Description, 
+                    transaction.Amount, 
+                    transaction.OperationTypeId);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dataTable);
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+
+            }
+
+
+        }
+
         public IActionResult Calendar()
         {
             return View();
+        }
+
+        public async Task<JsonResult> ObtainTransactionsCalendar(DateTime start, DateTime end)
+        {
+
+            int userId = _usersService.GetUserId();
+
+            var transactions = await _transactionsRepository.ObtainTransactionsByUserId(
+                new GetTransactionsByUserParameter()
+                {
+                    StartDate = start,
+                    EndDate = end,
+                    UserId = userId
+                });
+            var calendarEvents = transactions.Select(x => new CalendarEvent()
+            {
+                Title = x.Amount.ToString("N"),
+                Start = x.OperationDate.ToString("yyyy-MM-dd"),
+                End = x.OperationDate.ToString("yyyy-MM-dd"),
+                Color = x.OperationTypeId == OperationType.Expense ? "red" : null
+            });
+
+            return Json(calendarEvents);
+
+        }
+
+        public async Task<JsonResult> ObtainTransactionsByDate([FromQuery] DateTime date)
+        {
+            int userId = _usersService.GetUserId();
+
+            var transactions = await _transactionsRepository.ObtainTransactionsByUserId(
+                new GetTransactionsByUserParameter()
+                {
+                    StartDate = date,
+                    EndDate = date,
+                    UserId = userId
+                });
+            return Json(transactions);
         }
 
         public async Task<IActionResult> Create()

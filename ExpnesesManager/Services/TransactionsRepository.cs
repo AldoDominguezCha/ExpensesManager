@@ -10,6 +10,7 @@ namespace ExpnesesManager.Services
         Task Create(Transaction transaction);
         Task DeleteTransaction(int id);
         Task<Transaction> GetTransactionById(int id, int userId);
+        Task<IEnumerable<Transaction>> ObtainTransactionsAllTimeByUserId(int userId);
         Task<IEnumerable<Transaction>> ObtainTransactionsByAccountId(ObtainTransactionsByAccount model);
         Task<IEnumerable<ObtainByMonthResult>> ObtainTransactionsByMonth(int userId, int year);
         Task<IEnumerable<Transaction>> ObtainTransactionsByUserId(GetTransactionsByUserParameter model);
@@ -51,7 +52,7 @@ namespace ExpnesesManager.Services
 
             return await connection.QueryAsync<Transaction>(
                 @"
-                    SELECT t.Id, t.Amount, t.OperationDate, c.Name AS Category, a.Name AS Account, c.OperationTypeId 
+                    SELECT t.Id, t.Amount, t.OperationDate, c.Name AS Category, a.Name AS Account, c.OperationTypeId, t.Description 
                     FROM [Transactions] t
                     INNER JOIN [Categories] c
                     ON t.CategoryId = c.Id
@@ -60,6 +61,25 @@ namespace ExpnesesManager.Services
                     WHERE t.UserId = @UserId
                     AND OperationDate BETWEEN @StartDate AND @EndDate ORDER BY t.OperationDate DESC;
                 ", model);
+
+
+        }
+
+        public async Task<IEnumerable<Transaction>> ObtainTransactionsAllTimeByUserId(int userId)
+        {
+            using var connection = new SqlConnection(_connectionString);
+
+            return await connection.QueryAsync<Transaction>(
+                @"
+                    SELECT t.Id, t.Amount, t.OperationDate, c.Name AS Category, a.Name AS Account, c.OperationTypeId, t.Description 
+                    FROM [Transactions] t
+                    INNER JOIN [Categories] c
+                    ON t.CategoryId = c.Id
+                    INNER JOIN [Accounts] a
+                    ON t.AccountId = a.Id
+                    WHERE t.UserId = @UserId
+                    ORDER BY t.OperationDate DESC;
+                ", new { userId });
 
 
         }
