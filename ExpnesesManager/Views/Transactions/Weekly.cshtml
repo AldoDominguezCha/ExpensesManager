@@ -38,7 +38,7 @@
                 <a style="text-decoration : none" asp-action="Index" 
                 asp-route-year="@Model.ReferenceDate.Year"
                 asp-route-month="@Model.ReferenceDate.Month">
-                    @FormatDate(transactionsByWeek.StartDate) ~ @FormatDate(transactionsByWeek.EndDate)
+                    @FormatDate(transactionsByWeek.StartDate) - @FormatDate(transactionsByWeek.EndDate)
                 </a>
             </td>
             <td class="active" style="text-align : right">
