@@ -2,6 +2,7 @@
 using ClosedXML.Excel;
 using ExpnesesManager.Models;
 using ExpnesesManager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
@@ -29,7 +30,7 @@ namespace ExpnesesManager.Controllers
             _mapper = mapper;
             _reportsService = reportsService;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index(int month, int year)
         {
             int userId = _usersService.GetUserId();
